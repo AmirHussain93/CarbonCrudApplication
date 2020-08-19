@@ -6,7 +6,7 @@ In the project directory, you can run:
 ### `npm start`
 
 To start the Ui server
-   go to root directory (cd carbon-react-redux-app)
+   go to root directory (cd carbon-crud-app)
    `npm install`
    `npm start` <br/>
 
@@ -16,7 +16,7 @@ To start the Ui server
 ### `npm run server`
 
 To start json server to run api
-   go to root directory (cd carbon-react-redux-app)
+   go to root directory (cd carbon-crud-app)
    and run the following command 
    `npm run server`
 
