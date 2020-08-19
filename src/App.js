@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Content } from 'carbon-components-react/lib/components/UIShell';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import './app.scss';
+import EmployeeList from './components/employeelist';
+import Employee from './components/employee';
+import AppHeader from './components/header';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <AppHeader />
+        <Content>
+          <Switch>
+            <Route exact path='/'>
+              <Redirect to='/employees' />
+            </Route>
+            <Route exact path='/employees' component={EmployeeList} />
+            <Route exact path='/employee/new' component={Employee} />
+            <Route exact path='/employee/:id' component={Employee} />
+          </Switch>
+        </Content>
+      </Router>
+    </>
   );
 }
 
