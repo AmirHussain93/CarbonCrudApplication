@@ -16,11 +16,12 @@ function EmployeeList(props) {
 	const [firstRowIndex, setFirstRowIndex] = React.useState(0);
     const [currentPageSize, setCurrentPageSize] = React.useState(5);
       
-    const renderProp = ({ rows, headers, getHeaderProps }) => (
+    const renderProp = ({ rows, headers, getHeaderProps, onInputChange }) => (
 		<>
 		<DataTable.TableContainer title="Employee List">
 			<DataTable.TableToolbar>
 				<DataTable.TableToolbarContent>
+					<DataTable.TableToolbarSearch onChange={onInputChange} />
 					<Button onClick={() => props.history.push('employee/new')} size="small" kind="primary" className="add-employee-btn">
 						Add Employee
 			  		</Button>
@@ -97,7 +98,7 @@ function EmployeeList(props) {
 			{
 				tableBody && <>
 				<DataTable
-					filterRows={function noRefCheck() { }}
+					// filterRows={function noRefCheck() { }}
 					headers={[
 						{
 							header: 'Name',
