@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Router>
-        <AppHeader />
+        <AppHeader data-test="appHeader"/>
         <Content>
           <Switch>
             <Route exact path='/'>

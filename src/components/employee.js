@@ -89,6 +89,7 @@ function Employee(props) {
                         />
                         <Button
                             className="add-form-btn"
+                            data-test="addOrUpdateEmployee"
                             onClick={() => onSubmitHandler()}
                             disabled={!newEmployee.name|| !newEmployee.role || !newEmployee.ctc ? true : false}
                         >

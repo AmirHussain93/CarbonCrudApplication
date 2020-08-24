@@ -22,7 +22,7 @@ function EmployeeList(props) {
 			<DataTable.TableToolbar>
 				<DataTable.TableToolbarContent>
 					<DataTable.TableToolbarSearch onChange={onInputChange} />
-					<Button onClick={() => props.history.push('employee/new')} size="small" kind="primary" className="add-employee-btn">
+					<Button onClick={() => props.history.push('employee/new')} size="small" kind="primary" className="add-employee-btn" data-test="addNew">
 						Add Employee
 			  		</Button>
 				</DataTable.TableToolbarContent>
@@ -71,14 +71,14 @@ function EmployeeList(props) {
 	React.useEffect(() => {
 		if (list && list.length > 0) {
 			let data = list.map((li, index) => {
-				return { ...li, id: li.id.toString(), ctc: Number(li.ctc).toLocaleString(), action: <div><Button size="small" className="edit-employee" onClick={() => handleEdit(li)}>Edit</Button><Button className="delete-employee" size="small" onClick={() => handleDelete(li)}>Delete</Button></div> }
+				return { ...li, id: li.id.toString(), ctc: Number(li.ctc).toLocaleString(), action: <div><Button size="small" className="edit-employee" onClick={() => handleEdit(li)} data-test="editEmployee">Edit</Button><Button className="delete-employee" size="small" onClick={() => handleDelete(li)}>Delete</Button></div> }
 			})
 			setTableBody(data)
 		} else {
 			setTableBody([])
 		}
 	}, [list])
-    console.log(tableBody)
+
 	React.useEffect(() => {
 		if (deleteSuccess) {
 			clearDeleteSuccess()
@@ -136,9 +136,8 @@ function EmployeeList(props) {
 					pageSizes={[5, 10, 15, 25]}
 					itemsPerPageText="Items per page"
 					onChange={({ page, pageSize }) => {
-						// console.log("page---", page, 'page-siz----', pageSize)
 						if (pageSize !== currentPageSize) {
-						setCurrentPageSize(pageSize);
+							setCurrentPageSize(pageSize);
 						}
 						setFirstRowIndex(pageSize * (page - 1));
 					}}
@@ -154,10 +153,6 @@ function EmployeeList(props) {
 					modalAriaLabel="A label to be read by screen readers on the modal root node"
 					modalHeading={`Are you sure you want to delete ${deleteItem.name}?`}
 					modalLabel=""
-					onBlur={function noRefCheck(){}}
-					onClick={function noRefCheck(){console.log("onClick")}}
-					onFocus={function noRefCheck(){}}
-					onKeyDown={function noRefCheck(){}}
 					onRequestClose={function noRefCheck(){ setShowModal(false)}}
 					onRequestSubmit={function noRefCheck(){ 
 						deleteEmployee(deleteItem.id);
@@ -170,7 +165,7 @@ function EmployeeList(props) {
 					secondaryButtonText="No"
 					selectorPrimaryFocus="[data-modal-primary-focus]"
 					size="sm"
-			  />
+			  	/>
 			  
 			}
 		</div>
