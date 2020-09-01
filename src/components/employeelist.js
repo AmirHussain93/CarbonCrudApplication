@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DataTable, Button, Modal, Pagination } from 'carbon-components-react';
+import { DataTable, Button, Modal, Pagination, OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
 
 import getEmployees from '../store/actions/getEmployees';
 import deleteEmployee from '../store/actions/deleteEmployee';
@@ -14,12 +14,31 @@ function EmployeeList(props) {
 	const [showModal, setShowModal] = React.useState(false);
 	const [deleteItem, setDeleteItem] = React.useState({});
 	const [firstRowIndex, setFirstRowIndex] = React.useState(0);
-    const [currentPageSize, setCurrentPageSize] = React.useState(5);
+	const [currentPageSize, setCurrentPageSize] = React.useState(5);
+	const [showDetailModal, setShowDetailModal] = React.useState(false);
+	const [selectedEmp, setSelectedEmp] = React.useState([]);
+	
+	const batchActionClick = (row) => {
+		setShowDetailModal(true);
+		let filteredArray = tableBody.filter((el) => {
+			return row.some((f) => {
+			  return f.id === el.id;
+			});
+		});
+		setSelectedEmp(filteredArray);
+	}
       
-    const renderProp = ({ rows, headers, getHeaderProps, onInputChange }) => (
+    const renderProp = ({ rows, headers, getHeaderProps, getRowProps, getSelectionProps, getBatchActionProps, selectedRows, onInputChange }) => (
 		<>
 		<DataTable.TableContainer title="Employee List">
 			<DataTable.TableToolbar>
+				{/* make sure to apply getBatchActionProps so that the bar renders */}
+				<DataTable.TableBatchActions {...getBatchActionProps()}>
+					{/* inside of your batch actions, you can include selectedRows */}
+					<DataTable.TableBatchAction onClick={() => batchActionClick(selectedRows)}>
+						View selected employees details 
+					</DataTable.TableBatchAction>
+				</DataTable.TableBatchActions>
 				<DataTable.TableToolbarContent>
 					<DataTable.TableToolbarSearch onChange={onInputChange} />
 					<Button onClick={() => props.history.push('employee/new')} size="small" kind="primary" className="add-employee-btn" data-test="addNew">
@@ -28,26 +47,46 @@ function EmployeeList(props) {
 				</DataTable.TableToolbarContent>
 			</DataTable.TableToolbar>
 			{
-				tableBody && tableBody.length > 0 && <DataTable.Table>
-				<DataTable.TableHead>
-					<DataTable.TableRow>
-						{headers.map((header) => (
-							<DataTable.TableHeader key={header.key} {...getHeaderProps({ header })}>
-								{header.header}
-							</DataTable.TableHeader>
-						))}
-					</DataTable.TableRow>
-				</DataTable.TableHead>
-				<DataTable.TableBody>
-					{rows.map((row) => (
-						<DataTable.TableRow key={row.id}>
-							{row.cells.map((cell) => (
-								<DataTable.TableCell key={cell.id}>{cell.value}</DataTable.TableCell>
+				tableBody && tableBody.length > 0 && 
+				<DataTable.Table size='normal' >
+					<DataTable.TableHead>
+						<DataTable.TableRow>
+							<DataTable.TableExpandHeader />
+							<DataTable.TableSelectAll {...getSelectionProps()} />
+							{headers.map((header) => (
+								<DataTable.TableHeader 
+									key={header.key} 
+									{...header.header ? getHeaderProps({header}) : ""}
+								>
+									{header.header}
+								</DataTable.TableHeader>
 							))}
 						</DataTable.TableRow>
-					))}
-				</DataTable.TableBody>
-			 </DataTable.Table>
+					</DataTable.TableHead>
+					<DataTable.TableBody>
+						{rows.map((row) => (
+							<React.Fragment key={row.id}>
+								<DataTable.TableExpandRow {...getRowProps({ row })}>
+									<DataTable.TableSelectRow {...getSelectionProps({ row })} />
+									{/* <DataTable.TableRow key={row.id}> */}
+										{row.cells.map((cell) => (
+											<DataTable.TableCell key={cell.id}>{cell.value}</DataTable.TableCell>
+										))}
+									{/* </DataTable.TableRow> */}
+								</DataTable.TableExpandRow>
+								{row.isExpanded && (
+									<DataTable.TableExpandedRow colSpan={headers.length + 1}>
+										<h5>Employee Details</h5>
+										<p className="emp-details">Id: {row.id}</p>
+										<p className="emp-details">Name: {row.cells[0].value}</p>
+										<p className="emp-details">Role: {row.cells[1].value}</p>
+										<p className="emp-details">Ctc: {row.cells[2].value}</p>
+									</DataTable.TableExpandedRow>
+								)}
+							</React.Fragment>
+						))}
+					</DataTable.TableBody>
+			 	</DataTable.Table>
 			}
 
 		</DataTable.TableContainer>
@@ -71,7 +110,11 @@ function EmployeeList(props) {
 	React.useEffect(() => {
 		if (list && list.length > 0) {
 			let data = list.map((li, index) => {
-				return { ...li, id: li.id.toString(), ctc: Number(li.ctc).toLocaleString(), action: <div><Button size="small" className="edit-employee" onClick={() => handleEdit(li)} data-test="editEmployee">Edit</Button><Button className="delete-employee" size="small" onClick={() => handleDelete(li)}>Delete</Button></div> }
+				return { 
+					...li, 
+					id: li.id.toString(), ctc: Number(li.ctc).toLocaleString(), 
+					// action: <div><Button size="small" className="edit-employee" onClick={() => handleEdit(li)} data-test="editEmployee">Edit</Button><Button className="delete-employee" size="small" onClick={() => handleDelete(li)}>Delete</Button></div>, 
+					action: <OverflowMenu><OverflowMenuItem itemText="Edit" onClick={() => handleEdit(li)}/><OverflowMenuItem itemText="Delete" onClick={() => handleDelete(li)}/></OverflowMenu>}
 			})
 			setTableBody(data)
 		} else {
@@ -113,7 +156,7 @@ function EmployeeList(props) {
 							key: 'ctc'
 						},
 						{
-							header: 'Action',
+							header: '',
 							key: 'action'
 						}
 					]}
@@ -124,9 +167,11 @@ function EmployeeList(props) {
 						firstRowIndex,
 						firstRowIndex + currentPageSize
 					  )}
-					size={null}
-					sortRow={function noRefCheck() { }}
-					translateWithId={function noRefCheck() { }}
+					// size={null}
+					isSortable
+					// sortRow={function noRefCheck() { }}
+					// translateWithId={function noRefCheck() { }}
+					selectedRows={function(e) { console.log(e)}}
 				/>
 				<Pagination
 					totalItems={tableBody.length}
@@ -166,7 +211,36 @@ function EmployeeList(props) {
 					selectorPrimaryFocus="[data-modal-primary-focus]"
 					size="sm"
 			  	/>
-			  
+			}
+			{
+				<Modal
+					className="selected-emp-detail-modal"
+					hasScrollingContent={true}
+					iconDescription="Close"
+					modalAriaLabel="A label to be read by screen readers on the modal root node"
+					aria-label="sdsdds"
+					modalHeading={''}
+					modalLabel="Selected Employees Details"
+					onRequestClose={function noRefCheck(){ setShowDetailModal(false)}}
+					onRequestSubmit={function noRefCheck(){ 
+						setShowDetailModal(false)
+					}}
+					open={showDetailModal}
+					passiveModal={false}
+					primaryButtonDisabled={true}
+					// primaryButtonText="Okay"
+					secondaryButtonText="Okay"
+					selectorPrimaryFocus="[data-modal-primary-focus]"
+					size="sm"
+			  	>						
+				  	<ol className="selected-emp-list">
+						{
+							selectedEmp.map(emp => (
+								<li key={emp.id}>{emp.name} whose employee id is {emp.id} is a {emp.role} and his/her take home salary is {emp.ctc} INR.</li>
+							))
+						}
+			  		</ol>
+			  </Modal>
 			}
 		</div>
 

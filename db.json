@@ -1,40 +1,74 @@
 {
   "posts": [
     {
-      "name": "Hema Kumar",
-      "role": "Team Lead",
-      "ctc": "1250000",
-      "id": 1
-    },
-    {
-      "name": "Amir Hussain",
-      "role": "Software Engineer",
-      "ctc": "550000",
-      "id": 2
-    },
-    {
-      "name": "Yogesh",
-      "role": "Front end",
-      "ctc": "500000",
-      "id": 3
-    },
-    {
       "name": "Anshu",
       "role": "React Developer",
-      "ctc": "800000",
+      "ctc": "800004",
+      "isExpanded": false,
       "id": 4
     },
     {
-      "name": "Samreen",
-      "role": "Intern",
-      "ctc": "42000",
-      "id": 7
+      "name": "Sarwar",
+      "role": "UI/UX Designer",
+      "ctc": "650000",
+      "isExpanded": false,
+      "id": 8
     },
     {
-      "name": "Kapil Malviya",
-      "role": "UI designer",
-      "ctc": "450000",
-      "id": 8
+      "name": "Raj",
+      "role": "Team Lead",
+      "ctc": "100000",
+      "isExpanded": false,
+      "id": 9
+    },
+    {
+      "name": "Amir",
+      "role": "Front end Engineer",
+      "ctc": "400000",
+      "isExpanded": false,
+      "id": 11
+    },
+    {
+      "name": "Rafi",
+      "role": "HR Assistant Manager",
+      "ctc": "825000",
+      "isExpanded": false,
+      "id": 12
+    },
+    {
+      "name": "Yogesh",
+      "role": "NodeJS Developer",
+      "ctc": "600000",
+      "isExpanded": false,
+      "id": 13
+    },
+    {
+      "name": "Zeeshan",
+      "role": "React Native Developer",
+      "ctc": "520000",
+      "isExpanded": false,
+      "id": 14
+    },
+    {
+      "name": "Rajat Sharma",
+      "role": "QA Analyst",
+      "ctc": "360000",
+      "isExpanded": false,
+      "id": 15
+    },
+    {
+      "name": "Upen",
+      "role": "Senior QA ",
+      "ctc": "900000",
+      "isExpanded": false,
+      "id": 16
+    },
+    {
+      "name": "Vishwas",
+      "role": "Senior Developer",
+      "ctc": "2000000",
+      "isExpanded": false,
+      "id": 17
     }
   ]
 }

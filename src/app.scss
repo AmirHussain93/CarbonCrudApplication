@@ -45,6 +45,22 @@
         padding-bottom: 8px !important;
         width: 65px;
     }
+
+    .emp-details {
+        font-size: 0.875rem !important;
+    }
+
+   
+}
+
+.selected-emp-list {
+    list-style: decimal !important;
+}
+
+.selected-emp-detail-modal {
+    .bx--modal-content {
+        margin-left: 20px !important;
+    }
 }
 
 .add-form > .bx--form > .bx--fieldset > .bx--label {
@@ -88,6 +104,21 @@
             height: 39px;
             float: right;
             margin-top: 20px !important;
+        }
+
+        .step-btn {
+            background-color: blue;
+            padding: 5px;
+            font-size: 16px;
+            color: #ffffff;
+            border: 1px solid blue;
+            height: 39px;
+            float: left;
+            margin-top: 20px !important;
+        }
+
+        .prev-btn {
+            margin-left: 10px !important;
         }
     }
 }
