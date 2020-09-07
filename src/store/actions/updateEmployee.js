@@ -24,7 +24,7 @@ const updateEmployeeFailure = (error) => {
 const updateEmployee = (employee) => {
     return (dispatch) => {
         dispatch(updateEmployeeLoading())
-        axios.put(`${process.env.REACT_APP_SERVER_URL}/posts/${employee.id}`, employee).then(response => {
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/employees/${employee.id}`, employee).then(response => {
             const success = response.data
             dispatch(updateEmployeeSuccess(success))
         }).catch(error => {

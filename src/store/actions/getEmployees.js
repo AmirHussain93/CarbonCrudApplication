@@ -24,7 +24,7 @@ const getEmployeesFailure = (error) => {
 export const getEmployees = () => {
     return async (dispatch) => {
         dispatch(getEmployeesLoading())
-        await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts`).then(response => {
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/employees`).then(response => {
             const success = response.data
             dispatch(getEmployeesSuccess(success))
         }).catch(error => {

@@ -24,7 +24,7 @@ const createEmployeeFailure = (error) => {
 const createEmployee = (employee) => {
     return (dispatch) => {
         dispatch(createEmployeeLoading())
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/posts`,employee).then(response => {
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/employees`,employee).then(response => {
             const success = response.data
             dispatch(createEmployeeSuccess(success))
         }).catch(error => {

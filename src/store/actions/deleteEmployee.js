@@ -24,7 +24,7 @@ const deleteEmployeeFailure = (error) => {
 const deleteEmployee = (employeeId) => {
     return (dispatch) => {
         dispatch(deleteEmployeeLoading())
-        axios.delete(`${process.env.REACT_APP_SERVER_URL}/posts/${employeeId}`).then(response => {
+        axios.delete(`${process.env.REACT_APP_SERVER_URL}/employees/${employeeId}`).then(response => {
             const success = response.data
             dispatch(deleteEmployeeSuccess(success))
         }).catch(error => {

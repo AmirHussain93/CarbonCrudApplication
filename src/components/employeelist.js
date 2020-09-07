@@ -1,12 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DataTable, Button, Modal, Pagination, OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
+import { DataTable, Button, Modal, Pagination, OverflowMenu, OverflowMenuItem, Dropdown } from 'carbon-components-react';
 
 import getEmployees from '../store/actions/getEmployees';
 import deleteEmployee from '../store/actions/deleteEmployee';
 import { clearDeleteSuccess } from '../store/actions/clearState';
 
 import '../app.scss';
+
+const items = [
+	{
+	  id: 'option-1',
+	  label: 'Ctc <= 300000',
+	  ctc: [0, 300000]
+	},
+	{
+	  id: 'option-2',
+	  label: 'Ctc > 300000 & Ctc <= 800000',
+	  ctc: [300000, 800000]
+	},
+	{
+	  id: 'option-3',
+	  label: 'Ctc > 800000 & Ctc <= 1200000',
+	  ctc: [800000, 1200000]
+	},
+	{
+	  id: 'option-4',
+	  label: 'Ctc > 1200000',
+	  ctc: [1200000]
+	},
+];
 
 function EmployeeList(props) {
     const { getEmployees, list, deleteEmployee, deleteSuccess, clearDeleteSuccess } = props;
@@ -187,6 +210,44 @@ function EmployeeList(props) {
 						setFirstRowIndex(pageSize * (page - 1));
 					}}
         		/>
+				<Dropdown
+						className="dropdown-menu"
+						ariaLabel="Dropdown"
+						id="carbon-dropdown-example"
+						items={items}
+						label="Filter employee list based on CTC"
+						titleText="Advanced filter Options"
+						onChange={(e) => {
+							let filterArray = list.filter(item => {
+								if (e.selectedItem.ctc.length > 1) {
+									if (parseInt(item.ctc) >= e.selectedItem.ctc[0] && parseInt(item.ctc) <= e.selectedItem.ctc[1]) {
+										return {
+											id: item.id.toString(),
+											name: item.name, 
+											role: item.role, 
+											ctc: item.ctc, 
+											isExpanded: item.isExpanded,
+											action: <OverflowMenu><OverflowMenuItem itemText="Edit" onClick={() => handleEdit(item)}/><OverflowMenuItem itemText="Delete" onClick={() => handleDelete(item)}/></OverflowMenu>
+										}
+									} 
+								} else {
+									if (parseInt(item.ctc) > e.selectedItem.ctc[0]) {
+										return {
+											id: item.id.toString(),
+											name: item.name, 
+											role: item.role, 
+											ctc: item.ctc, 
+											isExpanded: item.isExpanded,
+											action: <OverflowMenu><OverflowMenuItem itemText="Edit" onClick={() => handleEdit(item)}/><OverflowMenuItem itemText="Delete" onClick={() => handleDelete(item)}/></OverflowMenu>
+										}
+									}
+								}
+								
+							})
+							console.log(filterArray)
+							setTableBody(filterArray);
+						}}
+					/>
 				</>
 			}
 

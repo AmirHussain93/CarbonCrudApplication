@@ -1,5 +1,5 @@
 {
-  "posts": [
+  "employees": [
     {
       "name": "Anshu",
       "role": "React Developer",
@@ -17,7 +17,7 @@
     {
       "name": "Raj",
       "role": "Team Lead",
-      "ctc": "100000",
+      "ctc": "1200000",
       "isExpanded": false,
       "id": 9
     },
@@ -64,11 +64,18 @@
       "id": 16
     },
     {
-      "name": "Vishwas",
-      "role": "Senior Developer",
-      "ctc": "2000000",
+      "name": "Tanveer Alam",
+      "role": "Project manager",
+      "ctc": "2200000",
       "isExpanded": false,
       "id": 17
+    },
+    {
+      "name": "Sarfaraz Alam",
+      "role": "Functional Manager",
+      "ctc": "1600000",
+      "isExpanded": false,
+      "id": 18
     }
   ]
 }

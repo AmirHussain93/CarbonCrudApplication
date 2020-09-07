@@ -49,6 +49,11 @@
     .emp-details {
         font-size: 0.875rem !important;
     }
+    .bx--dropdown__wrapper {
+        .bx--label {
+            margin-top: 20px;
+        }
+    }
 
    
 }
@@ -121,4 +126,8 @@
             margin-left: 10px !important;
         }
     }
+}
+
+.dropdown-menu {
+    width: 20%;
 }
