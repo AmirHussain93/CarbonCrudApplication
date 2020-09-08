@@ -71,7 +71,7 @@ function EmployeeList(props) {
 			</DataTable.TableToolbar>
 			{
 				tableBody && tableBody.length > 0 && 
-				<DataTable.Table size='normal' >
+				<DataTable.Table size='normal'>
 					<DataTable.TableHead>
 						<DataTable.TableRow>
 							<DataTable.TableExpandHeader />
@@ -110,7 +110,7 @@ function EmployeeList(props) {
 						))}
 					</DataTable.TableBody>
 			 	</DataTable.Table>
-			}
+			 }
 
 		</DataTable.TableContainer>
 		</>
@@ -137,7 +137,7 @@ function EmployeeList(props) {
 					...li, 
 					id: li.id.toString(), ctc: Number(li.ctc).toLocaleString(), 
 					// action: <div><Button size="small" className="edit-employee" onClick={() => handleEdit(li)} data-test="editEmployee">Edit</Button><Button className="delete-employee" size="small" onClick={() => handleDelete(li)}>Delete</Button></div>, 
-					action: <OverflowMenu><OverflowMenuItem itemText="Edit" onClick={() => handleEdit(li)}/><OverflowMenuItem itemText="Delete" onClick={() => handleDelete(li)}/></OverflowMenu>}
+					action: <OverflowMenu><OverflowMenuItem itemText="Edit" data-test="editEmployee" onClick={() => handleEdit(li)}/><OverflowMenuItem itemText="Delete" onClick={() => handleDelete(li)}/></OverflowMenu>}
 			})
 			setTableBody(data)
 		} else {
